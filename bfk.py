@@ -13,7 +13,7 @@ parser.add_argument('--cells', help='set the number of cells. Defaults to 8.', d
 args = parser.parse_args()
 
 # Build a BrainfuckMachine with custom parameters (if given)
-bfm = BrainfuckMachine(cells=args.cells)
+bfm = BrainfuckMachine(cells=int(args.cells))
 
 # Instantiate the interpreter
 bfi = BInterpreter(machine=bfm)
