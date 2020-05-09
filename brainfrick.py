@@ -20,6 +20,15 @@ class BLexer:
 
 
 class BrainfuckMachine:
+
+    """ Class encapsulating the core operations of a brainfuck machine. Namely,
+            - Move pointer left,
+            - Move pointer right,
+            - Increment cell under pointer,
+            - Decrement cell under pointer,
+            - Output value of cell under pointer,
+            - Input value to cell under pointer.
+    """
     
     def __init__(self, cells=256, in_func=input, out_func=chr):
         self.cells = [0] * cells
@@ -45,16 +54,18 @@ class BrainfuckMachine:
         self.cells[self.ptr] -= 1
 
     def value(self):
+        """ Return the value of the cell under the pointer. """
         return self.cells[self.ptr]
 
     def outf(self):
-        return self.out_func(self.value())
+        return self.out_func(self.cells[self.ptr])
 
     def inf(self):
         self.cells[self.ptr] = self.in_func()
 
 
 class BInterpreter:
+    """ Class encapsulating interpretation functionality for brainfuck code. """
 
     def __init__(self, machine=None):
         if machine:
@@ -63,9 +74,16 @@ class BInterpreter:
             self.machine = BrainfuckMachine()
 
     def interpret_code(self, code):
-        # Start with the first character
-        pos = 0
-        
+        """ Interpret each character in a list or string of brainfuck tokens. """
+
+        # Iterate through every character in the code. Use indexing so that we can
+        # jump as necessary for square bracket loops. To identify matching brackets for forward
+        # jumps, move forward a position at a time, keeping track of the nesting level (starts at 1). When a 
+        # open bracket ([) is encountered, increment the nesting level, and when a close bracket
+        # (]) is found, decrement it. When nesting level reaches 0, the matching bracket has been found.
+        # For finding the correct bracket for a backwards jump, do the same thing but with
+        # backwards iteration and swap when you increment and decrement.
+        pos = 0        
         while pos < len(code):
             
             if code[pos] == '[':
@@ -101,6 +119,7 @@ class BInterpreter:
                 pos += 1
 
     def interpret_one(self, char):
+        """ Perform the appropriate operation for a single brainfuck character. """
         if char == '>':
             self.machine.right()
         elif char == '<':
