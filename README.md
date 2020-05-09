@@ -8,6 +8,11 @@ Download the files:
 git clone https://github.com/rium9/brainfrick
 ```
 
+Use the command line tool:
+```
+python bfk.py [ path | brainfuck code ] 
+```
+
 Example usage code in `brainfrick.py`.
 
 ## TODO
