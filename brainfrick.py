@@ -121,11 +121,7 @@ if __name__ == '__main__':
     bfm = BrainfuckMachine(cells=8, out_func=chr)
     bi = BInterpreter(bfm)
 
-    print(bi.machine.cells)
-
     f = open('helloworld', 'r').read()
     code = list(BLexer.lex(f))
 
     bi.interpret_code(code)
-    print(bi.machine.cells)
-    print(bi.machine.out_buffer)
